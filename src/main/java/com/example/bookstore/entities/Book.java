@@ -11,11 +11,7 @@ import lombok.*;
 @ToString
 
 @Entity
-@Table(name = "book",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "book_isbn_ukey", columnNames = "isbn")
-        }
-)
+@Table(name = "book")
 public class Book {
     @Id
     @SequenceGenerator(
@@ -30,61 +26,67 @@ public class Book {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title")
     private String title;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
-    private Author author;
+    @Column(name = "image")
+    private String image;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private Category category;
+    @Column(name = "author")
+    private String author;
 
-    @Column(name = "price", nullable = false)
-    private double price;
+    @Column(name = "price")
+    private Double price;
 
-    @Column(name = "sale_price")
-    private double salePrice;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "publishing_house", referencedColumnName = "id")
-    private PublishingHouse publishingHouse;
-
-    @Column(name = "type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Type type;
-
-    @Column(name = "language", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Language language;
-
-    @Column(name = "year")
-    private int year;
-
-    @Column(name = "translator")
-    private String translator;
-
-    @Column(name = "cover", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Cover cover;
-
-    @Column(name = "pages")
-    private int pages;
-
-    @Column(name = "ISBN", nullable = false)
-    private Long ISBN;
-
-    @Column(name = "format")
-    private String format;
-
-    @Column(name = "weight")
-    private double weight;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "series", referencedColumnName = "id")
-    private Series series;
-
-    @Column(name = "about", columnDefinition = "TEXT")
-    private String about;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "author_id", referencedColumnName = "id")
+//    private Author author;
+//
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "category_id", referencedColumnName = "id")
+//    private Category category;
+//
+//    @Column(name = "sale_price")
+//    private Double salePrice;
+//
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "publishing_house", referencedColumnName = "id")
+//    private PublishingHouse publishingHouse;
+//
+//    @Column(name = "type", nullable = false)
+//    @Enumerated(EnumType.STRING)
+//    private Type type;
+//
+//    @Column(name = "language", nullable = false)
+//    @Enumerated(EnumType.STRING)
+//    private Language language;
+//
+//    @Column(name = "year")
+//    private Integer year;
+//
+//    @Column(name = "translator")
+//    private String translator;
+//
+//    @Column(name = "cover", nullable = false)
+//    @Enumerated(EnumType.STRING)
+//    private Cover cover;
+//
+//    @Column(name = "pages")
+//    private Integer pages;
+//
+//    @Column(name = "isbn")
+//    private String isbn;
+//
+//    @Column(name = "format")
+//    private Long format;
+//
+//    @Column(name = "weight")
+//    private Double weight;
+//
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "series", referencedColumnName = "id")
+//    private Series series;
+//
+//    @Column(name = "about", columnDefinition = "TEXT")
+//    private String about;
 }
