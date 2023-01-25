@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;700&family=Sofia+Sans:wght@300;600&display=swap');
+
+header {
+    position: relative;
+}
+
+header .logo {
+    font-weight: 700;
+    font-size: 30px;
+}
+
+header .presentation {
+    margin: 40px 0;
+    background-image: url("../image/lede.webp");
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: center center;
+    /* background-blend-mode: multiply;
+    background-color: rgb(255, 255, 255); */
+    position: relative;
+}
+
+header .presentation::after {
+    content: "Choose one for yourself";
+    position: absolute;
+    top: 100px;
+    left: 50px;
+    width: 300px;
+    font-size: 40px;
+    font-weight: 700;
+    background-color: rgba(250, 235, 215, 0.715);
+}
+
+header .presentation::before {
+    content: "Cheep books!";
+    position: absolute;
+    top: 200px;
+    left: 50px;
+    width: 300px;
+    font-size: 20px;
+    font-weight: 300;
+    background-color: rgba(250, 235, 215, 0.715);
+}
+
+header ul.nav {
+    float: right;
+    list-style: none;
+}
+
+header ul.nav li {
+    display: inline;
+    margin-left: 25px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: opacity 500ms ease;
+}
+
+header ul.nav li:hover {
+    opacity: 0.5;
+}
+
+
+header .icon {
+    float: right;
+    font-size: 30px;
+    margin: 10px;
+    transition: color, transform 200ms ease;
+    cursor: pointer;
+}
+
+header .icon:hover {
+    opacity: 0.5;
+    transform: scale(1.2);
+}
+
+header .icon.active {
+    color: #2a76bc;
+    transform: scale(1.2);
+}
+
+header .shop-cart {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 450px;
+    background-color: rgb(245, 230, 210);
+    z-index: 5;
+    -webkit-box-shadow: 4px 4px 11px 0px rgba(78, 79, 73, 0.43);
+    -moz-box-shadow: 4px 4px 11px 0px rgba(78, 79, 73, 0.43);
+    box-shadow: 4px 4px 11px 0px rgba(78, 79, 73, 0.43);
+    flex-wrap: wrap;
+    display: flex;
+}
+
+header .empty-shop-cart {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 15px 25px;
+    font-size: 20px;
+    background-color: rgb(245, 230, 210);
+    z-index: 5;
+    -webkit-box-shadow: 4px 4px 11px 0px rgba(78, 79, 73, 0.43);
+    -moz-box-shadow: 4px 4px 11px 0px rgba(78, 79, 73, 0.43);
+    box-shadow: 4px 4px 11px 0px rgba(78, 79, 73, 0.43);
+    flex-wrap: wrap;
+    display: flex;
+}
+
+
+header .shop-cart .item {
+    width: 100%;
+    height: 90px;
+    margin: 10px 10px 10px 10px;
+    background-color: antiquewhite;
+    padding: 1%;
+}
+
+header .shop-cart .item img {
+    float: left;
+    margin-right: 15px;
+    height: 100%; 
+}
+
+header .shop-cart .item h3,
+header .shop-cart .item p,
+header .shop-cart .item b {
+    display: block;
+    color: rgb(34, 32, 30);
+}
+
+header .shop-cart .item .delete-from-cart {
+    padding: 10px;
+    float: right;
+    top: -60px;
+    font-size: 20px;
+    position: relative;
+}
+
+header .shop-cart .item .delete-from-cart:hover {
+    color: #2a76bc;
+    cursor: pointer;
+}
+
+header .shop-cart .total-sum {
+    margin: 15px;
+    margin-top: 5px;
+    font-size: 20px;
+    font-weight: 700;
+}
