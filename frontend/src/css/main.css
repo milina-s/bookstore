@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;700&family=Sofia+Sans:wght@300;600&display=swap');
+
+main {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    /* position: absolute; */
+    /* justify-content: space-between; */
+}
+
+main .item {
+    width: 15%;
+    margin: 10px;
+    background-color: antiquewhite;
+    transition: transform 100ms ease;
+    padding: 1% 1% 5% 1%;
+    overflow: hidden;
+    position: relative;
+    /* font-size: 13px; */
+}
+
+main .item:hover {
+    /* background-blend-mode:multiply; */
+    /* background-color: rgb(189, 177, 161); */
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+main .item img {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+main .item h3,
+main .item p {
+    color: rgb(34, 32, 30);
+}
+
+main .item b {
+    color: rgb(1, 39, 74);
+    padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+}
+
+main .item:hover b {
+    color: #2a76bc;
+}
+
+main .item .add-to-cart:hover {
+    color: #2a76bc;
+    background-color: rgba(255, 255, 255, 0.293);
+    border: 1px solid #2a76bc;
+    padding: 9px;
+    font-weight: 700;
+}
+
+main .item .add-to-cart {
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+}
