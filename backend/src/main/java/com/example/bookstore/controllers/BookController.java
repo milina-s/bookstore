@@ -107,7 +107,7 @@ public class BookController {
             @RequestParam(name = "minPrice", required = false) Double minPrice,
             @RequestParam(name = "maxPrice", required = false) Double maxPrice,
             // in stock
-            @RequestParam(name = "inStock", required = false) Boolean inStock,
+            @RequestParam(name = "inStock", defaultValue = "false") Boolean inStock,
             // sort
             @RequestParam(name = "sortby", defaultValue = "popularity") String sortBy,
             @RequestParam(name = "sortdir", defaultValue = "desc") String sortDirection,
