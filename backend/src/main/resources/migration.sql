@@ -4,16 +4,16 @@ create schema public;
 
 create table users
 (
-    id           serial primary key,
-    email        varchar(255) not null,
-    password     varchar(255) not null,
-    role         varchar(255) not null,
-    first_name   varchar(255),
-    last_name    varchar(255),
-    phone_number varchar(255),
-    address      text,
-    created_at   timestamp default now(),
-    updated_at   timestamp default now()
+    id         serial primary key,
+    email      varchar(255) not null,
+    password   varchar(255) not null,
+    role       varchar(255) not null,
+    first_name varchar(255),
+    last_name  varchar(255),
+    phone      varchar(255),
+    address    text,
+    created_at timestamp default now(),
+    updated_at timestamp
 );
 
 create table categories
@@ -95,13 +95,14 @@ create table books
 
 create table orders
 (
-    id         serial primary key,
-    user_id    int not null,
-    manager_id int,
-    status     varchar(255) default 'CREATED',
-    created_at timestamp    default now(),
-    updated_at timestamp    default now(),
-    foreign key (user_id) references users (id),
+    id          serial primary key,
+    customer_id int not null,
+    manager_id  int,
+    status      varchar(255) default 'CREATED',
+    address     text,
+    created_at  timestamp    default now(),
+    updated_at  timestamp,
+    foreign key (customer_id) references users (id),
     foreign key (manager_id) references users (id)
 );
 

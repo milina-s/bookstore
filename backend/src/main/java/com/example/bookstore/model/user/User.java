@@ -39,19 +39,19 @@ public class User implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "phone")
+    private String phone;
 
     @Column(name = "address")
     private String address;
 
-    public User(String email, String password, UserRole role, String firstName, String lastName, String phoneNumber, String address) {
+    public User(String email, String password, UserRole role, String firstName, String lastName, String phone, String address) {
         this.email = email;
         this.password = password;
         this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
         this.address = address;
     }
 

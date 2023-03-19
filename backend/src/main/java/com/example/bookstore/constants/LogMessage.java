@@ -18,4 +18,10 @@ public final class LogMessage {
     public static final String IN_FIND_BY_PUBLISHER = "in findByPublisher(), publisherId: {}";
     public static final String IN_FILTER_BOOKS = "in filterBooks()";
 
+    public static final String IN_FIND_BY_USERNAME = "in findByUsername(), class: {}, username: {}";
+    public static final String IN_FIND_BY_EMAIL = "in findByEmail(), class: {}, email: {}";
+    public static final String IN_FILTER_ORDERS = "in filterOrders()";
+    public static final String IN_ORDER_BELONGS_TO_USER = "in orderBelongsToUser(), orderId: {}, userId: {}";
+    public static final String IN_FIND_ORDERS_BY_CUSTOMER = "in findOrderByCustomer(), customerId: {}";
+    public static final String IN_FIND_ORDERS_BY_MANAGER = "in findOrderByManager(), managerId: {}";
 }

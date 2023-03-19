@@ -15,4 +15,8 @@ public final class ErrorMessage {
     public static final String AUTHOR_NOT_FOUND_BY_ID = "Author not found by this id.";
     public static final String SERIES_NOT_FOUND_BY_ID = "Series not found by this id.";
     public static final String PUBLISHER_NOT_FOUND_BY_ID = "Publisher not found by this id.";
+    public static final String ORDER_NOT_FOUND_BY_ID = "Order not found by this id.";
+    public static final String USER_NOT_FOUND_BY_EMAIL = "User not found by this email.";
+    public static final String USER_NOT_ALLOWED_TO_CHANGE_ORDER_STATUS = "User not allowed to change order status.";
+    public static final String USER_NOT_ALLOWED_TO_GET_ORDER = "User not allowed to get order.";
 }

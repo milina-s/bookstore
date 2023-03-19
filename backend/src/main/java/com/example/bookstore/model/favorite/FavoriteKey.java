@@ -1,4 +1,4 @@
-package com.example.bookstore.model.order;
+package com.example.bookstore.model.favorite;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -13,10 +13,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 
 @Embeddable
-public class OrderBookKey implements Serializable {
+public class FavoriteKey implements Serializable {
 
-    @Column(name = "order_id")
-    private Long orderId;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "book_isbn")
     private String bookIsbn;

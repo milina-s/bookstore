@@ -56,5 +56,4 @@ public class BookDtoResponse {
     private PublisherDto publisher;
 
     private SeriesDto series;
-
 }

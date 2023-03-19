@@ -1,3 +1,10 @@
+insert into users (email, password, role, first_name, last_name, phone, address)
+values ('anna@gmail.com','$2a$10$s4YT0bvR1U6T0rrqvxC0mObFcYIg22meRnVWfz5W.7U6G6qMIgNCe','ROLE_CUSTOMER','Anna','Kucheruk','0671234567','Kyiv, Kievs`ka str, 1'),
+('maria@gmail.com','$2a$10$YVW9WMDKq0SrkfC/vOiPRuK28ELGbg2.TgQEaOzTJuIRGUxqSn/0u','ROLE_CUSTOMER','Maria','Kirichenko','0665484586','Kyiv, Kievs`ka str, 2'),
+('milina@gmail.com','$2a$10$EytIfyqjdmzRFzCGabuvn.qZ1AAe1qdTHdQfHQrCzfj9u7DzDYTPi','ROLE_CUSTOMER','Milina','Samokhatnia','0663151286','Kyiv, Kievs`ka str, 3'),
+('manager@gmail.com','$2a$10$DkSEDVJC76mY1nRIPkkGs.G.iN0hwLjuqiD7WbzzUnlunFS0IDHUa','ROLE_MANAGER','Ivan','Ivanenko','0956325896','Kyiv, Kievs`ka str, 4'),
+('admin@gmail.com','$2a$10$twxnUMwh1p2M.9jOBd0PL.EUBpGZDnNUpaf.QLdd.d3yZ2O8VBMHC','ROLE_ADMIN','Katerina','Petrenko','0675241453','Kyiv, Kievs`ka str, 5');
+
 insert into publishers (name_ua, name_en, about_ua, about_en, website)
 values ('Клуб Сімейного Дозвілля',
         'Klub Simeynogo Dovzhlia',
@@ -253,3 +260,29 @@ values ('9786171281356',
         416, '135x205мм', 183,
         'Микола Дятленко',
         2, 2, 1, null);
+
+insert into orders (customer_id, created_at)
+values (1, '2019-01-01 00:00:00'),
+       (3, '2019-01-01 00:00:00'),
+       (2, '2019-01-01 00:00:00');
+
+insert into order_book (order_id, book_isbn, quantity, price)
+values (1, '9786171232020', 2, 250),
+       (1, '9786171294998', 1, 250),
+       (1, '9786171266919', 1, 190),
+       (2, '9786171289000', 2, 250),
+       (2, '9786171294998', 1, 250),
+       (3, '9786171276864', 3, 210),
+       (3, '9786171289000', 1, 100),
+       (3, '9786171276482', 2, 190);
+
+insert into favorites (user_id, book_isbn)
+values (1, '9786171232020'),
+       (1, '9786171261266'),
+       (1, '9780099532811'),
+       (2, '9786171266919');
+
+insert into reviews (book_isbn, user_id, rating, text)
+values ('9786171232020', 1, 5, 'Книга відмінна, як і всі романи Ремарка'),
+       ('9786171232020', 2, 4, 'Книга дуже цікава, але не така як "Три товариші"'),
+       ('9786171232020', 3, 3, 'Книга не дуже');

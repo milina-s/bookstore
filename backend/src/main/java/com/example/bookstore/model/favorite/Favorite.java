@@ -1,4 +1,4 @@
-package com.example.bookstore.model;
+package com.example.bookstore.model.favorite;
 
 import com.example.bookstore.model.book.Book;
 import com.example.bookstore.model.user.User;
@@ -17,16 +17,17 @@ import lombok.NoArgsConstructor;
 @Table(name = "favorites")
 public class Favorite {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    @EmbeddedId
+    private FavoriteKey id = new FavoriteKey();
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "book_isbn", referencedColumnName = "isbn")
+    @ManyToOne
+    @MapsId("bookIsbn")
+    @JoinColumn(name = "book_isbn")
     private Book book;
 
 }

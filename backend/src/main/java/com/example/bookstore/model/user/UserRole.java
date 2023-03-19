@@ -1,7 +1,7 @@
 package com.example.bookstore.model.user;
 
 public enum UserRole {
-    ROLE_USER,
+    ROLE_CUSTOMER,
     ROLE_ADMIN,
     ROLE_MANAGER
 }

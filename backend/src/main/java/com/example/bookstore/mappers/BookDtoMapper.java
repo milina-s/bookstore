@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 
 @Component
-public class BookDtoResponseMapper extends AbstractConverter<Book, BookDtoResponse> {
+public class BookDtoMapper extends AbstractConverter<Book, BookDtoResponse> {
 
     private final AuthorDtoMapper authorDtoMapper;
     private final CategoryDtoMapper categoryDtoMapper;

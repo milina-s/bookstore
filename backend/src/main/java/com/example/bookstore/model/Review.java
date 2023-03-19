@@ -3,11 +3,15 @@ package com.example.bookstore.model;
 import com.example.bookstore.model.book.Book;
 import com.example.bookstore.model.user.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 
 @Entity
 @Table(name = "reviews")

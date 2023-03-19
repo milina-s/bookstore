@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class OrderBook {
 
     @EmbeddedId
-    private OrderBookKey id;
+    private OrderBookKey id = new OrderBookKey();
 
     @ManyToOne
     @MapsId("orderId")
