@@ -1,4 +1,4 @@
-insert into users (email, password, role, first_name, last_name, phone, address)
+insert into users (email, password, role, firstname, lastname, phone, address)
 values ('anna@gmail.com','$2a$10$s4YT0bvR1U6T0rrqvxC0mObFcYIg22meRnVWfz5W.7U6G6qMIgNCe','ROLE_CUSTOMER','Anna','Kucheruk','0671234567','Kyiv, Kievs`ka str, 1'),
 ('maria@gmail.com','$2a$10$YVW9WMDKq0SrkfC/vOiPRuK28ELGbg2.TgQEaOzTJuIRGUxqSn/0u','ROLE_CUSTOMER','Maria','Kirichenko','0665484586','Kyiv, Kievs`ka str, 2'),
 ('milina@gmail.com','$2a$10$EytIfyqjdmzRFzCGabuvn.qZ1AAe1qdTHdQfHQrCzfj9u7DzDYTPi','ROLE_CUSTOMER','Milina','Samokhatnia','0663151286','Kyiv, Kievs`ka str, 3'),

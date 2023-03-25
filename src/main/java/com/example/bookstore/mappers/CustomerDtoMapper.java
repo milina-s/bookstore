@@ -11,8 +11,8 @@ public class CustomerDtoMapper extends AbstractConverter<User, CustomerDto> {
     protected CustomerDto convert(User customer) {
         return CustomerDto.builder()
                 .id(customer.getId())
-                .firstName(customer.getFirstName())
-                .lastName(customer.getLastName())
+                .firstname(customer.getFirstname())
+                .lastname(customer.getLastname())
                 .email(customer.getEmail())
                 .build();
     }

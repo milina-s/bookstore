@@ -1,6 +1,8 @@
 package com.example.bookstore.model.user;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +17,8 @@ import java.util.Collections;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 
 @Entity
 @Table(name = "users")
@@ -22,6 +26,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "email")
@@ -33,11 +38,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "firstname")
+    private String firstname;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "lastname")
+    private String lastname;
 
     @Column(name = "phone")
     private String phone;
@@ -45,12 +50,12 @@ public class User implements UserDetails {
     @Column(name = "address")
     private String address;
 
-    public User(String email, String password, UserRole role, String firstName, String lastName, String phone, String address) {
+    public User(String email, String password, UserRole role, String firstname, String lastname, String phone, String address) {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.phone = phone;
         this.address = address;
     }

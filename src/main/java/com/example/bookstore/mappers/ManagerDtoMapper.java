@@ -11,8 +11,8 @@ public class ManagerDtoMapper extends AbstractConverter<User, ManagerDto> {
     protected ManagerDto convert(User manager) {
         return ManagerDto.builder()
                 .id(manager.getId())
-                .firstName(manager.getFirstName())
-                .lastName(manager.getLastName())
+                .firstname(manager.getFirstname())
+                .lastname(manager.getLastname())
                 .build();
     }
 }

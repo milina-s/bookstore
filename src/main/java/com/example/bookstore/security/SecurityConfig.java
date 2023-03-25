@@ -1,24 +1,26 @@
 package com.example.bookstore.security;
 
 import com.example.bookstore.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 
+@RequiredArgsConstructor
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
+    private final UserRepository userRepository;
+
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository) {
+    public UserDetailsService userDetailsService() {
         return username -> userRepository
                 .findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("No such user"));
@@ -30,26 +32,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/api/v1/bookstore/**").permitAll();
-                    auth.requestMatchers("/api/v1/bookstore/user/**").hasAuthority("USER");
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
 
-                    auth.requestMatchers("/api/v1/bookstore/admin/**",
-                                    "/api/v1/bookstore/categories/update",
-                                    "/api/v1/bookstore/categories/save")
-                            .hasAuthority("ADMIN");
-
-                    auth.requestMatchers("/api/v1/bookstore/manager/**").hasAuthority("MANAGER");
-//                    auth.requestMatchers("/api/v1/security/user").hasAuthority("USER");
-//                    auth.requestMatchers("/api/v1/security/admin").hasAuthority("ADMIN");
-//                    auth.anyRequest().authenticated();
-                })
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic(Customizer.withDefaults())
-                .build();
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
 }

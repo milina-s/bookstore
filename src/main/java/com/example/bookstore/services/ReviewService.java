@@ -26,7 +26,7 @@ public class ReviewService {
         return reviewRepository.findAllByBookIsbn(isbn)
                 .stream()
                 .map(review -> ReviewDtoResponse.builder()
-                        .userName(review.getUser().getFirstName() + " " + review.getUser().getLastName())
+                        .userName(review.getUser().getFirstname() + " " + review.getUser().getLastname())
                         .rating(review.getRating())
                         .text(review.getText())
                         .build())
