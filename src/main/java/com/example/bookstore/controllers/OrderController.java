@@ -7,6 +7,8 @@ import com.example.bookstore.model.order.OrderStatus;
 import com.example.bookstore.model.user.User;
 import com.example.bookstore.services.OrderService;
 import com.example.bookstore.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,11 +28,19 @@ public class OrderController {
     private final UserService userService;
 
     @PostMapping("/create")
+    @Operation(
+            description = "Create order for current user",
+            responses = {@ApiResponse(responseCode = "200", description = "Order created successfully")}
+    )
     public OrderDto createOrder(@RequestBody List<OrderBookDto> orderBooks, Principal principal) {
         return orderService.createOrder(orderBooks, userService.findByEmail(principal.getName()));
     }
 
     @PutMapping("/{orderId}/status")
+    @Operation(
+            description = "Change order status by id",
+            responses = {@ApiResponse(responseCode = "200", description = "Order status changed successfully")}
+    )
     public void setOrderStatus(@PathVariable Long orderId, @RequestParam OrderStatus status, Principal principal) {
 
         User user = userService.findByEmail(principal.getName());
@@ -43,6 +53,10 @@ public class OrderController {
 
     // TODO: add role check for admin
     @GetMapping("/filter/admin")
+    @Operation(
+            description = "Filter orders for admin by status, customer, manager, createdAfter",
+            responses = {@ApiResponse(responseCode = "200", description = "Orders filtered successfully")}
+    )
     public List<OrderDto> filterOrders(
             @RequestParam(name = "status", required = false) String status,
             @RequestParam(name = "customer", required = false) Long customerId,
@@ -59,6 +73,10 @@ public class OrderController {
     }
 
     @GetMapping("/filter/customer")
+    @Operation(
+            description = "Filter orders for customer by status, createdAfter",
+            responses = {@ApiResponse(responseCode = "200", description = "Orders filtered successfully")}
+    )
     public List<OrderDto> filterOrdersByCustomer(
             Principal principal,
             @RequestParam(name = "status", required = false) String status,
@@ -74,6 +92,10 @@ public class OrderController {
     }
 
     @GetMapping("/filter/manager")
+    @Operation(
+            description = "Filter orders for manager by status, customer, createdAfter",
+            responses = {@ApiResponse(responseCode = "200", description = "Orders filtered successfully")}
+    )
     public List<OrderDto> filterByManager(
             Principal principal,
             @RequestParam(name = "status", required = false) String status,
@@ -90,6 +112,10 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
+    @Operation(
+            description = "Get order by id",
+            responses = {@ApiResponse(responseCode = "200", description = "Order found successfully")}
+    )
     public OrderDto getOrder(@PathVariable Long orderId, Principal principal) {
         if (userService.findByEmail(principal.getName()).getRole().name().equals("ROLE_ADMIN") ||
                 orderService.isOrderBelongsToUser(orderId, userService.findByEmail(principal.getName()).getId()))

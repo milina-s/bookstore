@@ -2,9 +2,8 @@ package com.example.bookstore.controllers;
 
 import com.example.bookstore.dto.PublisherDto;
 import com.example.bookstore.services.PublisherService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,47 +17,47 @@ public class PublisherController {
 
     private final PublisherService publisherService;
 
-    @ApiOperation(value = "Save publisher")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Publisher successfully saved")
-    })
     @PostMapping("/save")
+    @Operation(
+            description = "Save a new publisher",
+            responses = {@ApiResponse(responseCode = "200", description = "Publisher saved successfully")}
+    )
     public void savePublisher(@RequestBody PublisherDto publisherDto) {
         publisherService.save(publisherDto);
     }
 
-    @ApiOperation(value = "Update publisher")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Publisher successfully updated")
-    })
     @PostMapping("/update")
+    @Operation(
+            description = "Update publisher",
+            responses = {@ApiResponse(responseCode = "200", description = "Publisher updated successfully")}
+    )
     public void updatePublisher(@RequestBody PublisherDto publisherDto) {
         publisherService.update(publisherDto);
     }
 
-    @ApiOperation(value = "Delete publisher by id")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Publisher successfully deleted")
-    })
     @PostMapping("/delete/{id}")
+    @Operation(
+            description = "Delete publisher by id",
+            responses = {@ApiResponse(responseCode = "200", description = "Publisher deleted successfully")}
+    )
     public void deletePublisherById(@PathVariable Long id) {
         publisherService.deleteById(id);
     }
 
-    @ApiOperation(value = "Get all publishers")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Publishers successfully found")
-    })
     @GetMapping("/get_all")
+    @Operation(
+            description = "Get list of all publishers",
+            responses = {@ApiResponse(responseCode = "200", description = "Publishers retrieved successfully")}
+    )
     public List<PublisherDto> getAllPublishers() {
         return publisherService.findAllPublisherDto();
     }
 
-    @ApiOperation(value = "Get publisher by id")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Publisher successfully found")
-    })
     @PostMapping("/get/{id}")
+    @Operation(
+            description = "Get publisher by id",
+            responses = {@ApiResponse(responseCode = "200", description = "Publisher retrieved successfully")}
+    )
     public PublisherDto getPublisherById(@PathVariable Long id) {
         return publisherService.findPublisherDtoById(id);
     }

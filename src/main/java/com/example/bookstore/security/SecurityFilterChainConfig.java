@@ -24,6 +24,7 @@ public class SecurityFilterChainConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/api/v1/bookstore/auth/**").permitAll();
+                    auth.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

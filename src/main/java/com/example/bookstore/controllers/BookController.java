@@ -6,9 +6,8 @@ import com.example.bookstore.model.book.BookCover;
 import com.example.bookstore.model.book.BookLanguage;
 import com.example.bookstore.model.book.BookType;
 import com.example.bookstore.services.BookService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,66 +30,65 @@ public class BookController {
 
     private final BookService bookService;
 
-    @ApiOperation(value = "Save book")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Book successfully saved")
-    })
     @PostMapping("/save")
+    @Operation(
+            description = "Save book",
+            responses = {@ApiResponse(responseCode = "200", description = "Book saved successfully")}
+    )
     public void saveBook(@Valid @RequestBody BookDtoRequest book) {
         bookService.save(book);
     }
 
-    @ApiOperation(value = "Update book")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Book successfully updated")
-    })
     @PutMapping("/update")
+    @Operation(
+            description = "Update book",
+            responses = {@ApiResponse(responseCode = "200", description = "Book updated successfully")}
+    )
     public void updateBook(@Valid @RequestBody BookDtoRequest book) {
         bookService.update(book);
     }
 
-    @ApiOperation(value = "Delete book")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Book successfully deleted")
-    })
     @DeleteMapping("/delete/{isbn}")
+    @Operation(
+            description = "Delete book by isbn",
+            responses = {@ApiResponse(responseCode = "200", description = "Book deleted successfully")}
+    )
     public void deleteBook(@PathVariable String isbn) {
         bookService.deleteById(isbn);
     }
 
-    @ApiOperation(value = "Get a book by isbn")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Book successfully retrieved")
-    })
     @GetMapping("/get_by_isbn")
+    @Operation(
+            description = "Get book by isbn",
+            responses = {@ApiResponse(responseCode = "200", description = "Book retrieved successfully")}
+    )
     public BookDtoResponse getBookByIsbn(@RequestParam String isbn) {
         return bookService.findBookDtoByIsbn(isbn);
     }
 
+//    @GetMapping("/get_by_original_title")
+//    @Operation(
+//            description = "Get list of books by original title",
+//            responses = {@ApiResponse(responseCode = "200", description = "List of books retrieved")}
+//    )
+//    public List<BookDtoResponse> getBooksByOriginalTitle(@RequestParam String originalTitle) {
+//        return bookService.findBookDtoByOriginalTitle(originalTitle);
+//    }
+//
+//    @GetMapping("/get_by_title")
+//    @Operation(
+//            description = "Get list of books by title",
+//            responses = {@ApiResponse(responseCode = "200", description = "List of books retrieved")}
+//    )
+//    public List<BookDtoResponse> getBooksByTitle(@RequestParam String title) {
+//        return bookService.findBookDtoByTitle(title);
+//    }
 
-    @ApiOperation(value = "Get a list of books by original title")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Books successfully retrieved")
-    })
-    @GetMapping("/get_by_original_title")
-    public List<BookDtoResponse> getBooksByOriginalTitle(@RequestParam String originalTitle) {
-        return bookService.findBookDtoByOriginalTitle(originalTitle);
-    }
-
-    @ApiOperation(value = "Get a list of books by title")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Books successfully retrieved")
-    })
-    @GetMapping("/get_by_title")
-    public List<BookDtoResponse> getBooksByTitle(@RequestParam String title) {
-        return bookService.findBookDtoByTitle(title);
-    }
-
-    @ApiOperation(value = "Get a filtered list of books")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Books successfully retrieved")
-    })
     @GetMapping("/filter")
+    @Operation(
+            description = "Filter books by search word, authors, categories, series, publishers, languages, covers, types, price, in stock, sort",
+            responses = {@ApiResponse(responseCode = "200", description = "List of books retrieved successfully")}
+    )
     public ResponseEntity<List<BookDtoResponse>> filterBooks(
             // filter by search word
             @RequestParam(name = "search", required = false) String searchWord,

@@ -2,9 +2,8 @@ package com.example.bookstore.controllers;
 
 import com.example.bookstore.dto.AuthorDto;
 import com.example.bookstore.services.AuthorService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,47 +21,47 @@ public class AuthorController {
 
     private final AuthorService authorService;
 
-    @ApiOperation(value = "Save author")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Author successfully saved")
-    })
     @PostMapping("/save")
+    @Operation(
+            description = "Save a new author",
+            responses = {@ApiResponse(responseCode = "200", description = "Author saved successfully")}
+    )
     public void saveBook(@Valid @RequestBody AuthorDto author) {
         authorService.save(author);
     }
 
-    @ApiOperation(value = "Update author")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Author successfully updated")
-    })
     @PutMapping("/update")
+    @Operation(
+            description = "Update author",
+            responses = {@ApiResponse(responseCode = "200", description = "Author updated successfully")}
+    )
     public void updateAuthor(@Valid @RequestBody AuthorDto authorDto) {
         authorService.update(authorDto);
     }
 
-    @ApiOperation(value = "Delete author by id")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Author successfully deleted")
-    })
     @DeleteMapping("/delete/{id}")
+    @Operation(
+            description = "Delete author by id",
+            responses = {@ApiResponse(responseCode = "200", description = "Author deleted successfully")}
+    )
     public void deleteAuthorById(@PathVariable Long id) {
         authorService.deleteById(id);
     }
 
-    @ApiOperation(value = "Get a list of all authors")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Authors successfully found")
-    })
     @GetMapping("/get_all")
+    @Operation(
+            description = "Get list of all authors",
+            responses = {@ApiResponse(responseCode = "200", description = "Authors retrieved successfully")}
+    )
     public List<AuthorDto> getAllAuthors() {
         return authorService.findAllAuthorDto();
     }
 
-    @ApiOperation(value = "Get author by id")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Author successfully found")
-    })
     @GetMapping("/get/{id}")
+    @Operation(
+            description = "Get author by id",
+            responses = {@ApiResponse(responseCode = "200", description = "Author retrieved successfully")}
+    )
     public AuthorDto getAuthorById(@PathVariable Long id) {
         return authorService.findAuthorDtoById(id);
     }

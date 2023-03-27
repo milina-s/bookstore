@@ -1,5 +1,7 @@
 package com.example.bookstore.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +14,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-
+// TODO: 10.09.2021 add @JsonPropertyOrder to all DTOs
+@JsonPropertyOrder({"id", "nameUa", "nameEn", "fullNameOriginal", "birthDate", "deathDate", "aboutUa", "aboutEn", "image"})
 public class AuthorDto implements Serializable {
 
+    // TODO: 10.09.2021 add validation to all DTOs
+    // TODO: 10.09.2021 add @JsonProperty to all DTOs
+    @JsonProperty("id")
     private Long id;
 
     private String nameUa;
