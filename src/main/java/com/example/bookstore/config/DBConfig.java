@@ -1,29 +1,38 @@
 package com.example.bookstore.config;
 
-import com.example.bookstore.model.user.UserRole;
-import com.example.bookstore.model.user.User;
-import com.example.bookstore.repositories.UserRepository;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-import java.util.List;
+import javax.sql.DataSource;
 
 @Configuration
 public class DBConfig {
 
     @Bean
-    CommandLineRunner fillUsers(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        return userRepository.findAll().isEmpty() ? args ->
-                userRepository.saveAll(List.of(
-                        new User("anna@gmail.com", passwordEncoder.encode("anna"), UserRole.ROLE_CUSTOMER, "Anna", "Kucheruk", "0671234567", "Kyiv, Kievs`ka str, 1"),
-                        new User("maria@gmail.com", passwordEncoder.encode("maria"), UserRole.ROLE_CUSTOMER, "Maria", "Kirichenko", "0665484586", "Kyiv, Kievs`ka str, 2"),
-                        new User("milina@gmail.com", passwordEncoder.encode("milina"), UserRole.ROLE_CUSTOMER, "Milina", "Samokhatnia", "0663151286", "Kyiv, Kievs`ka str, 3"),
-                        new User("manager@gmail.com", passwordEncoder.encode("manager"), UserRole.ROLE_MANAGER, "Ivan", "Ivanenko", "0956325896", "Kyiv, Kievs`ka str, 4"),
-                        new User("admin@gmail.com", passwordEncoder.encode("admin"), UserRole.ROLE_ADMIN, "Katerina", "Petrenko", "0675241453", "Kyiv, Kievs`ka str, 5")
-                )) : null;
+    public DataSourceInitializer dataSourceInitializer(@Qualifier("dataSource") final DataSource dataSource) {
+        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+        resourceDatabasePopulator.addScript(new ClassPathResource("/data.sql"));
+        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+        dataSourceInitializer.setDataSource(dataSource);
+        dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
+        return dataSourceInitializer;
     }
+
+//    @Bean
+//    CommandLineRunner fillUsers(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+//        return userRepository.findAll().isEmpty() ? args ->
+//                userRepository.saveAll(List.of(
+//                        new User("anna@gmail.com", passwordEncoder.encode("anna"), UserRole.ROLE_CUSTOMER, "Anna", "Kucheruk", "0671234567", "Kyiv, Kievs`ka str, 1"),
+//                        new User("maria@gmail.com", passwordEncoder.encode("maria"), UserRole.ROLE_CUSTOMER, "Maria", "Kirichenko", "0665484586", "Kyiv, Kievs`ka str, 2"),
+//                        new User("milina@gmail.com", passwordEncoder.encode("milina"), UserRole.ROLE_CUSTOMER, "Milina", "Samokhatnia", "0663151286", "Kyiv, Kievs`ka str, 3"),
+//                        new User("manager@gmail.com", passwordEncoder.encode("manager"), UserRole.ROLE_MANAGER, "Ivan", "Ivanenko", "0956325896", "Kyiv, Kievs`ka str, 4"),
+//                        new User("admin@gmail.com", passwordEncoder.encode("admin"), UserRole.ROLE_ADMIN, "Katerina", "Petrenko", "0675241453", "Kyiv, Kievs`ka str, 5")
+//                )) : null;
+//    }
 
 //    @Bean
 //    CommandLineRunner fillUsers(UserRepository userRepository, PasswordEncoder passwordEncoder) {
