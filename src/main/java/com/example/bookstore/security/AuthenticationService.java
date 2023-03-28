@@ -1,15 +1,15 @@
 package com.example.bookstore.security;
 
+import com.example.bookstore.constants.ErrorMessage;
 import com.example.bookstore.dto.auth.AuthenticationRequest;
 import com.example.bookstore.dto.auth.AuthenticationResponse;
 import com.example.bookstore.dto.auth.RegisterRequest;
 import com.example.bookstore.model.user.User;
-import com.example.bookstore.model.user.UserRole;
 import com.example.bookstore.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -17,22 +17,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository repository;
-    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final ModelMapper modelMapper;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(UserRole.ROLE_CUSTOMER)
-                .build();
+
+        User user = modelMapper.map(request, User.class);
         repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .token(jwtService.generateToken(user))
                 .build();
     }
 
@@ -43,9 +37,9 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        User user = repository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException(ErrorMessage.USER_NOT_FOUND + " " + request.getEmail()));
+        String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();

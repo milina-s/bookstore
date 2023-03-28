@@ -1,15 +1,24 @@
 drop schema if exists public cascade;
 create schema public;
 
+create sequence users_id_seq;
+create sequence categories_id_seq;
+create sequence publishers_id_seq;
+create sequence authors_id_seq;
+create sequence series_id_seq;
+create sequence orders_id_seq;
+create sequence reviews_id_seq;
+
 
 create table users
 (
-    id         serial primary key,
+    id         bigint primary key
+               default nextval('users_id_seq'),
     email      varchar(255) not null,
     password   varchar(255) not null,
     role       varchar(255) not null,
-    firstname varchar(255),
-    lastname  varchar(255),
+    firstname  varchar(255),
+    lastname   varchar(255),
     phone      varchar(255),
     address    text,
     created_at timestamp default now(),
@@ -18,24 +27,17 @@ create table users
 
 create table categories
 (
-    id                 serial primary key,
+    id                 bigint primary key
+                       default nextval('categories_id_seq'),
     name_ua            varchar(255),
     name_en            varchar(255),
     parent_category_id int
 );
 
--- create table subcategories
--- (
---     id          serial primary key,
---     name_ua     varchar(255) not null,
---     name_en     varchar(255),
---     category_id int          not null,
---     foreign key (category_id) references categories (id)
--- );
-
 create table publishers
 (
-    id       serial primary key,
+    id       bigint primary key
+             default nextval('publishers_id_seq'),
     name_en  varchar(255) not null,
     name_ua  varchar(255),
     about_ua text,
@@ -45,7 +47,8 @@ create table publishers
 
 create table authors
 (
-    id                 serial primary key,
+    id                 bigint primary key
+                       default nextval('authors_id_seq'),
     name_en            varchar(255) not null,
     name_ua            varchar(255),
     full_name_original varchar(255),
@@ -58,7 +61,8 @@ create table authors
 
 create table series
 (
-    id           serial primary key,
+    id           bigint primary key
+                 default nextval('series_id_seq'),
     name         varchar(255) not null,
     publisher_id int          not null,
     foreign key (publisher_id) references publishers (id)
@@ -95,7 +99,8 @@ create table books
 
 create table orders
 (
-    id          serial primary key,
+    id          bigint primary key
+                default nextval('orders_id_seq'),
     customer_id int not null,
     manager_id  int,
     status      varchar(255) default 'CREATED',
@@ -129,7 +134,8 @@ create table favorites
 
 create table reviews
 (
-    id         serial primary key,
+    id         bigint primary key
+               default nextval('reviews_id_seq'),
     rating     int,
     text       text,
     user_id    int,

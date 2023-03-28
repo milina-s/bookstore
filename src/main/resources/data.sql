@@ -1,9 +1,14 @@
 insert into users (email, password, role, firstname, lastname, phone, address)
-values ('anna@gmail.com','$2a$10$s4YT0bvR1U6T0rrqvxC0mObFcYIg22meRnVWfz5W.7U6G6qMIgNCe','ROLE_CUSTOMER','Anna','Kucheruk','0671234567','Kyiv, Kievs`ka str, 1'),
-('maria@gmail.com','$2a$10$YVW9WMDKq0SrkfC/vOiPRuK28ELGbg2.TgQEaOzTJuIRGUxqSn/0u','ROLE_CUSTOMER','Maria','Kirichenko','0665484586','Kyiv, Kievs`ka str, 2'),
-('milina@gmail.com','$2a$10$EytIfyqjdmzRFzCGabuvn.qZ1AAe1qdTHdQfHQrCzfj9u7DzDYTPi','ROLE_CUSTOMER','Milina','Samokhatnia','0663151286','Kyiv, Kievs`ka str, 3'),
-('manager@gmail.com','$2a$10$DkSEDVJC76mY1nRIPkkGs.G.iN0hwLjuqiD7WbzzUnlunFS0IDHUa','ROLE_MANAGER','Ivan','Ivanenko','0956325896','Kyiv, Kievs`ka str, 4'),
-('admin@gmail.com','$2a$10$twxnUMwh1p2M.9jOBd0PL.EUBpGZDnNUpaf.QLdd.d3yZ2O8VBMHC','ROLE_ADMIN','Katerina','Petrenko','0675241453','Kyiv, Kievs`ka str, 5');
+values ('anna@gmail.com', '$2a$10$s4YT0bvR1U6T0rrqvxC0mObFcYIg22meRnVWfz5W.7U6G6qMIgNCe', 'ROLE_CUSTOMER', 'Anna',
+        'Kucheruk', '0671234567', 'Kyiv, Kievs`ka str, 1'),
+       ('maria@gmail.com', '$2a$10$YVW9WMDKq0SrkfC/vOiPRuK28ELGbg2.TgQEaOzTJuIRGUxqSn/0u', 'ROLE_CUSTOMER', 'Maria',
+        'Kirichenko', '0665484586', 'Kyiv, Kievs`ka str, 2'),
+       ('milina@gmail.com', '$2a$10$EytIfyqjdmzRFzCGabuvn.qZ1AAe1qdTHdQfHQrCzfj9u7DzDYTPi', 'ROLE_CUSTOMER', 'Milina',
+        'Samokhatnia', '0663151286', 'Kyiv, Kievs`ka str, 3'),
+       ('manager@gmail.com', '$2a$10$DkSEDVJC76mY1nRIPkkGs.G.iN0hwLjuqiD7WbzzUnlunFS0IDHUa', 'ROLE_MANAGER', 'Ivan',
+        'Ivanenko', '0956325896', 'Kyiv, Kievs`ka str, 4'),
+       ('admin@gmail.com', '$2a$10$twxnUMwh1p2M.9jOBd0PL.EUBpGZDnNUpaf.QLdd.d3yZ2O8VBMHC', 'ROLE_ADMIN', 'Katerina',
+        'Petrenko', '0675241453', 'Kyiv, Kievs`ka str, 5');
 
 insert into publishers (name_ua, name_en, about_ua, about_en, website)
 values ('Клуб Сімейного Дозвілля',
@@ -25,7 +30,7 @@ values ('Клуб Сімейного Дозвілля',
         'Фантастику в нас перекладають фани жанру, а книжки для підприємців редагуюють фахівці з бізнесу. Адже лише коли людина живе темою, ви отримуєте глибокий, емоційний і якісний текст.' ||
         'Ми робимо все це, щоб сфокусувати вашу увагу на головному — на відповідях, заради яких ви читаєте наші книги.' ||
         'BookChef — книжки, що формують особистість.',
-        'BookChef is a publishing house of world bestsellers Yuvale Noa Harari, Michelle Obama, Cameron Diaz, Bill Clinton, Itzhak Adizes, Liu Cixin and other famous writers.' ||
+        'BookChef is a publishing house of world bestsel lers Yuvale Noa Harari, Michelle Obama, Cameron Diaz, Bill Clinton, Itzhak Adizes, Liu Cixin and other famous writers.' ||
         'We dream that there will be more important books in your life, so we carefully choose not only books, but also the people who work on them.' ||
         'Fantasy is translated by genre fans, and books for entrepreneurs are edited by business experts. Because only when a person lives the topic, you get a deep, emotional and quality text.' ||
         'We do all this so that you can focus on the main thing - on the answers for which you read our books.' ||

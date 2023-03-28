@@ -14,12 +14,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-// TODO: 10.09.2021 add @JsonPropertyOrder to all DTOs
+// TODO: add @JsonPropertyOrder to all DTOs
 @JsonPropertyOrder({"id", "nameUa", "nameEn", "fullNameOriginal", "birthDate", "deathDate", "aboutUa", "aboutEn", "image"})
 public class AuthorDto implements Serializable {
 
-    // TODO: 10.09.2021 add validation to all DTOs
-    // TODO: 10.09.2021 add @JsonProperty to all DTOs
+    // TODO: add validation to all DTOs
+    // TODO: add @JsonProperty to all DTOs
     @JsonProperty("id")
     private Long id;
 
