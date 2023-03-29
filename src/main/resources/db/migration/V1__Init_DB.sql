@@ -83,7 +83,7 @@ create table books
     quantity            int default 0,
     popularity          int default 0,
     translator          varchar(255),
-    rating              decimal(5, 2),
+    rating              decimal(2, 1),
     author_id           int,
     category_id         int,
     publisher_id        int,
