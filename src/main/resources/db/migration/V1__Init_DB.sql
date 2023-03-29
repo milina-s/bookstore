@@ -1,6 +1,3 @@
-drop schema if exists public cascade;
-create schema public;
-
 create sequence users_id_seq;
 create sequence categories_id_seq;
 create sequence publishers_id_seq;
