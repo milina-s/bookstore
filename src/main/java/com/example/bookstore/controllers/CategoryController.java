@@ -1,7 +1,8 @@
 package com.example.bookstore.controllers;
 
 
-import com.example.bookstore.dto.CategoryDto;
+import com.example.bookstore.dto.CategoryDtoRequest;
+import com.example.bookstore.dto.CategoryDtoResponse;
 import com.example.bookstore.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,7 +25,7 @@ public class CategoryController {
             description = "Save a new category",
             responses = {@ApiResponse(responseCode = "200", description = "Category saved successfully")}
     )
-    public void saveCategory(@Valid @RequestBody CategoryDto dto) {
+    public void saveCategory(@Valid @RequestBody CategoryDtoRequest dto) {
         categoryService.save(dto);
     }
 
@@ -33,7 +34,7 @@ public class CategoryController {
             description = "Update category",
             responses = {@ApiResponse(responseCode = "200", description = "Category updated successfully")}
     )
-    public void updateCategory(@Valid @RequestBody CategoryDto dto) {
+    public void updateCategory(@Valid @RequestBody CategoryDtoRequest dto) {
         categoryService.update(dto);
     }
 
@@ -51,7 +52,7 @@ public class CategoryController {
             description = "Get list of all categories",
             responses = {@ApiResponse(responseCode = "200", description = "Categories retrieved successfully")}
     )
-    public List<CategoryDto> getAllCategories() {
+    public List<CategoryDtoResponse> getAllCategories() {
         return categoryService.findAllCategoryDto();
     }
 

@@ -8,13 +8,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryDto implements Serializable {
-
+public class CategoryDtoResponse implements Serializable {
     private Long id;
 
     @Pattern(regexp = "^[a-zA-Z0-9\\s][^<>]*$", message = "Wrong name for category")
@@ -23,5 +23,6 @@ public class CategoryDto implements Serializable {
 
     private String nameUa;
 
-    private Long parentCategoryId;
+    private List<CategoryDtoResponse> childCategories;
 }
+

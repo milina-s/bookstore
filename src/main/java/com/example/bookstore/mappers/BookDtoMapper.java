@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class BookDtoMapper extends AbstractConverter<Book, BookDtoResponse> {
 
     private final AuthorDtoMapper authorDtoMapper;
-    private final CategoryDtoMapper categoryDtoMapper;
+    private final CategoryDtoRequestMapper categoryDtoRequestMapper;
     private final PublisherDtoMapper publisherDtoMapper;
     private final SeriesDtoMapper tagDtoMapper;
 
@@ -37,7 +37,7 @@ public class BookDtoMapper extends AbstractConverter<Book, BookDtoResponse> {
                 .language(book.getLanguage())
                 .cover(book.getCover())
                 .author(book.getAuthor() != null ? authorDtoMapper.convert(book.getAuthor()) : null)
-                .category(book.getCategory() != null ? categoryDtoMapper.convert(book.getCategory()) : null)
+                .category(book.getCategory() != null ? categoryDtoRequestMapper.convert(book.getCategory()) : null)
                 .publisher(book.getPublisher() != null ? publisherDtoMapper.convert(book.getPublisher()) : null)
                 .series(book.getSeries() != null ? tagDtoMapper.convert(book.getSeries()) : null)
                 .build();

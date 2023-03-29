@@ -51,7 +51,7 @@ public class BookDtoResponse {
 
     private AuthorDto author;
 
-    private CategoryDto category;
+    private CategoryDtoRequest category;
 
     private PublisherDto publisher;
 

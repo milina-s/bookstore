@@ -2,7 +2,8 @@ package com.example.bookstore.services;
 
 import com.example.bookstore.constants.ErrorMessage;
 import com.example.bookstore.constants.LogMessage;
-import com.example.bookstore.dto.CategoryDto;
+import com.example.bookstore.dto.CategoryDtoRequest;
+import com.example.bookstore.dto.CategoryDtoResponse;
 import com.example.bookstore.model.Category;
 import com.example.bookstore.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,26 +24,19 @@ public class CategoryService {
     private final ModelMapper mapper;
 
 
-    public void save(CategoryDto categoryDto) {
-        log.info(LogMessage.IN_SAVE, CategoryDto.class);
+    public void save(CategoryDtoRequest categoryDtoRequest) {
+        log.info(LogMessage.IN_SAVE, CategoryDtoRequest.class);
 
-        if (categoryRepository.findByNameEn(categoryDto.getNameEn()).isPresent())
+        if (categoryRepository.findByNameEn(categoryDtoRequest.getNameEn()).isPresent())
             throw new IllegalArgumentException (ErrorMessage.CATEGORY_ALREADY_EXISTS_BY_THIS_NAME);
 
-        Category category = mapper.map(categoryDto, Category.class);
+        Category category = mapper.map(categoryDtoRequest, Category.class);
 
-        if (categoryDto.getParentCategoryId() != null)
-            category.setParentCategory(findCategoryById(categoryDto.getParentCategoryId()));
+        if (categoryDtoRequest.getParentCategoryId() != null)
+            category.setParentCategory(findCategoryById(categoryDtoRequest.getParentCategoryId()));
 
         categoryRepository.save(category);
 
-    }
-
-    private CategoryDto findCategoryDtoById(Long id) {
-        log.info(LogMessage.IN_FIND_BY_ID, CategoryDto.class, id);
-
-        return mapper.map(categoryRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException(ErrorMessage.CATEGORY_NOT_FOUND_BY_ID + id)), CategoryDto.class);
     }
 
     public Category findCategoryById(Long id) {
@@ -52,17 +46,11 @@ public class CategoryService {
                 .orElseThrow(() -> new NoSuchElementException(ErrorMessage.CATEGORY_NOT_FOUND_BY_ID + id));
     }
 
-    public List<CategoryDto> findAllCategoryDto() {
-        log.info(LogMessage.IN_FIND_ALL, CategoryDto.class);
+    public List<CategoryDtoResponse> findAllCategoryDto() {
+        log.info(LogMessage.IN_FIND_ALL, CategoryDtoRequest.class);
 
-        return mapper.map(categoryRepository.findAll(), new TypeToken<List<CategoryDto>>() {
+        return mapper.map(categoryRepository.findAllByParentCategoryIsNull(), new TypeToken<List<CategoryDtoResponse>>() {
         }.getType());
-    }
-
-    public List<Category> findAllCategory() {
-        log.info(LogMessage.IN_FIND_ALL, Category.class);
-
-        return categoryRepository.findAll();
     }
 
     public Category findCategoryByNameEn(String nameEn) {
@@ -83,18 +71,18 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 
-    public void update(CategoryDto categoryDto) {
-        log.info(LogMessage.IN_UPDATE_BY_ID, Category.class, categoryDto.getId());
+    public void update(CategoryDtoRequest categoryDtoRequest) {
+        log.info(LogMessage.IN_UPDATE_BY_ID, Category.class, categoryDtoRequest.getId());
 
-        Category category = findCategoryById(categoryDto.getId());
-        if (categoryDto.getParentCategoryId() != null)
-            category.setParentCategory(findCategoryById(categoryDto.getParentCategoryId()));
+        Category category = findCategoryById(categoryDtoRequest.getId());
+        if (categoryDtoRequest.getParentCategoryId() != null)
+            category.setParentCategory(findCategoryById(categoryDtoRequest.getParentCategoryId()));
 
-        if (categoryRepository.findByNameEn(categoryDto.getNameEn()).isPresent())
+        if (categoryRepository.findByNameEn(categoryDtoRequest.getNameEn()).isPresent())
             throw new IllegalArgumentException (ErrorMessage.CATEGORY_ALREADY_EXISTS_BY_THIS_NAME);
 
-        category.setNameEn(categoryDto.getNameEn());
-        category.setNameUa(categoryDto.getNameUa());
+        category.setNameEn(categoryDtoRequest.getNameEn());
+        category.setNameUa(categoryDtoRequest.getNameUa());
 
         categoryRepository.save(category);
     }

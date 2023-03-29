@@ -2,7 +2,7 @@ package com.example.bookstore.services;
 
 import com.example.bookstore.constants.ErrorMessage;
 import com.example.bookstore.constants.LogMessage;
-import com.example.bookstore.dto.CategoryDto;
+import com.example.bookstore.dto.CategoryDtoRequest;
 import com.example.bookstore.dto.OrderBookDto;
 import com.example.bookstore.dto.OrderDto;
 import com.example.bookstore.model.book.Book;
@@ -86,7 +86,7 @@ public class OrderService {
     }
 
     public List<OrderDto> findAllOrderShortDtoResponse() {
-        return modelMapper.map(orderRepository.findAll(), new TypeToken<List<CategoryDto>>() {
+        return modelMapper.map(orderRepository.findAll(), new TypeToken<List<CategoryDtoRequest>>() {
         }.getType());
     }
 
