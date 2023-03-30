@@ -1,8 +1,8 @@
 package com.example.bookstore.controllers;
 
 import com.example.bookstore.constants.ErrorMessage;
-import com.example.bookstore.dto.OrderBookDto;
-import com.example.bookstore.dto.OrderDto;
+import com.example.bookstore.dto.order.OrderBookDto;
+import com.example.bookstore.dto.order.OrderDto;
 import com.example.bookstore.model.order.OrderStatus;
 import com.example.bookstore.model.user.User;
 import com.example.bookstore.services.OrderService;
@@ -10,16 +10,19 @@ import com.example.bookstore.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/bookstore/orders")
 public class OrderController {
@@ -51,7 +54,7 @@ public class OrderController {
         orderService.setOrderStatus(orderId, status, user);
     }
 
-    // TODO: add role check for admin
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/filter/admin")
     @Operation(
             description = "Filter orders for admin by status, customer, manager, createdAfter",
@@ -72,6 +75,7 @@ public class OrderController {
         return orderService.filterOrders(status, customerId, managerId, createdAfter, pageable);
     }
 
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @GetMapping("/filter/customer")
     @Operation(
             description = "Filter orders for customer by status, createdAfter",
@@ -91,6 +95,7 @@ public class OrderController {
         return orderService.filterOrders(status, userService.findByEmail(principal.getName()).getId(), null, createdAfter, pageable);
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/filter/manager")
     @Operation(
             description = "Filter orders for manager by status, customer, createdAfter",

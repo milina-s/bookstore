@@ -1,6 +1,6 @@
 package com.example.bookstore.mappers;
 
-import com.example.bookstore.dto.ManagerDto;
+import com.example.bookstore.dto.user.ManagerDto;
 import com.example.bookstore.model.user.User;
 import org.modelmapper.AbstractConverter;
 import org.springframework.stereotype.Component;

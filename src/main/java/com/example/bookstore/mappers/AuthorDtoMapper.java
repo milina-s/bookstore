@@ -1,13 +1,12 @@
 package com.example.bookstore.mappers;
 
-import com.example.bookstore.dto.AuthorDto;
+import com.example.bookstore.dto.author.AuthorDto;
 import com.example.bookstore.model.Author;
 import org.modelmapper.AbstractConverter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorDtoMapper extends AbstractConverter<Author, AuthorDto> {
-
     @Override
     protected AuthorDto convert(Author author) {
         return AuthorDto.builder()
@@ -22,5 +21,4 @@ public class AuthorDtoMapper extends AbstractConverter<Author, AuthorDto> {
                 .deathDate(author.getDeathDate())
                 .build();
     }
-
 }

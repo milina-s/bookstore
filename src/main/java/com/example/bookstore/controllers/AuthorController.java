@@ -1,6 +1,6 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.dto.AuthorDto;
+import com.example.bookstore.dto.author.AuthorDto;
 import com.example.bookstore.services.AuthorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,9 +13,9 @@ import java.util.List;
 
 
 @Slf4j
-@RestController
 @RequiredArgsConstructor
 @CrossOrigin
+@RestController
 @RequestMapping(value = "/api/v1/bookstore/authors")
 public class AuthorController {
 
@@ -65,5 +65,4 @@ public class AuthorController {
     public AuthorDto getAuthorById(@PathVariable Long id) {
         return authorService.findAuthorDtoById(id);
     }
-
 }

@@ -1,4 +1,4 @@
-package com.example.bookstore.dto;
+package com.example.bookstore.dto.review;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,12 +11,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ReviewDtoRequest implements Serializable {
+public class ReviewDto implements Serializable {
 
     private Integer rating;
 
     private String text;
 
-    private String bookIsbn;
-
+    private String userName;
 }

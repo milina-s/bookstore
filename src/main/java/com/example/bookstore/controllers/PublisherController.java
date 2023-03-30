@@ -1,16 +1,18 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.dto.PublisherDto;
+import com.example.bookstore.dto.publisher.PublisherDto;
 import com.example.bookstore.services.PublisherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/bookstore/publishers")
 public class PublisherController {
@@ -61,5 +63,4 @@ public class PublisherController {
     public PublisherDto getPublisherById(@PathVariable Long id) {
         return publisherService.findPublisherDtoById(id);
     }
-
 }

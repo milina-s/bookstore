@@ -1,16 +1,18 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.dto.SeriesDto;
+import com.example.bookstore.dto.series.SeriesDto;
 import com.example.bookstore.services.SeriesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/bookstore/series")
 public class SeriesController {
@@ -61,5 +63,4 @@ public class SeriesController {
     public List<SeriesDto> getAllSeries() {
         return seriesService.findAllSeriesDto();
     }
-
 }

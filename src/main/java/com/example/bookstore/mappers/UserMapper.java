@@ -24,5 +24,4 @@ public class UserMapper extends AbstractConverter<RegisterRequest, User> {
                 .role(UserRole.ROLE_CUSTOMER)
                 .build();
     }
-
 }

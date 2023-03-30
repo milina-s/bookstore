@@ -1,6 +1,6 @@
 package com.example.bookstore.mappers;
 
-import com.example.bookstore.dto.BookDtoResponse;
+import com.example.bookstore.dto.book.BookDto;
 import com.example.bookstore.model.book.Book;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.AbstractConverter;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 
 @Component
-public class BookDtoMapper extends AbstractConverter<Book, BookDtoResponse> {
+public class BookDtoMapper extends AbstractConverter<Book, BookDto> {
 
     private final AuthorDtoMapper authorDtoMapper;
     private final CategoryDtoRequestMapper categoryDtoRequestMapper;
@@ -17,8 +17,8 @@ public class BookDtoMapper extends AbstractConverter<Book, BookDtoResponse> {
     private final SeriesDtoMapper tagDtoMapper;
 
     @Override
-    protected BookDtoResponse convert(Book book) {
-        return BookDtoResponse.builder()
+    protected BookDto convert(Book book) {
+        return BookDto.builder()
                 .isbn(book.getIsbn())
                 .title(book.getTitle())
                 .titleOriginal(book.getTitleOriginal())

@@ -1,21 +1,20 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.dto.BookDtoResponse;
+import com.example.bookstore.dto.book.BookDto;
 import com.example.bookstore.services.FavoriteService;
 import com.example.bookstore.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/bookstore/favorites")
 public class FavoriteController {
@@ -23,12 +22,12 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
     private final UserService userService;
 
-    @GetMapping("/get_all")
+    @GetMapping("/get_all_for_current_user")
     @Operation(
             description = "Get all favorites for current user",
             responses = {@ApiResponse(responseCode = "200", description = "Favorites retrieved successfully")}
     )
-    public List<BookDtoResponse> getAllFavorites(Principal principal) {
+    public List<BookDto> getAllFavorites(Principal principal) {
         return favoriteService.findAllFavorites(userService.findByEmail(principal.getName()));
     }
 

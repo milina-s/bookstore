@@ -1,5 +1,9 @@
-package com.example.bookstore.dto;
+package com.example.bookstore.dto.book;
 
+import com.example.bookstore.dto.author.AuthorDto;
+import com.example.bookstore.dto.category.CategoryDtoShort;
+import com.example.bookstore.dto.publisher.PublisherDto;
+import com.example.bookstore.dto.series.SeriesDto;
 import com.example.bookstore.model.book.BookCover;
 import com.example.bookstore.model.book.BookLanguage;
 import com.example.bookstore.model.book.BookType;
@@ -8,12 +12,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 
-public class BookDtoResponse {
+public class BookDto implements Serializable {
 
     private String isbn;
 
@@ -51,7 +57,7 @@ public class BookDtoResponse {
 
     private AuthorDto author;
 
-    private CategoryDtoRequest category;
+    private CategoryDtoShort category;
 
     private PublisherDto publisher;
 

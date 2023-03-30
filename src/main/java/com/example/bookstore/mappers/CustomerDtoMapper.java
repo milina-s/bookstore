@@ -1,6 +1,6 @@
 package com.example.bookstore.mappers;
 
-import com.example.bookstore.dto.CustomerDto;
+import com.example.bookstore.dto.user.CustomerDto;
 import com.example.bookstore.model.user.User;
 import org.modelmapper.AbstractConverter;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,6 @@ public class CustomerDtoMapper extends AbstractConverter<User, CustomerDto> {
                 .id(customer.getId())
                 .firstname(customer.getFirstname())
                 .lastname(customer.getLastname())
-                .email(customer.getEmail())
                 .build();
     }
 }

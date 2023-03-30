@@ -1,7 +1,7 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.dto.BookDtoRequest;
-import com.example.bookstore.dto.BookDtoResponse;
+import com.example.bookstore.dto.book.BookDto;
+import com.example.bookstore.dto.book.BookDtoRequest;
 import com.example.bookstore.model.book.BookCover;
 import com.example.bookstore.model.book.BookLanguage;
 import com.example.bookstore.model.book.BookType;
@@ -20,11 +20,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequiredArgsConstructor
-
 @Slf4j
-@RestController
+@RequiredArgsConstructor
 @CrossOrigin
+@RestController
 @RequestMapping(value = "/api/v1/bookstore/books")
 public class BookController {
 
@@ -62,34 +61,25 @@ public class BookController {
             description = "Get book by isbn",
             responses = {@ApiResponse(responseCode = "200", description = "Book retrieved successfully")}
     )
-    public BookDtoResponse getBookByIsbn(@RequestParam String isbn) {
+    public BookDto getBookByIsbn(@RequestParam String isbn) {
         return bookService.findBookDtoByIsbn(isbn);
     }
 
-//    @GetMapping("/get_by_original_title")
-//    @Operation(
-//            description = "Get list of books by original title",
-//            responses = {@ApiResponse(responseCode = "200", description = "List of books retrieved")}
-//    )
-//    public List<BookDtoResponse> getBooksByOriginalTitle(@RequestParam String originalTitle) {
-//        return bookService.findBookDtoByOriginalTitle(originalTitle);
-//    }
-//
-//    @GetMapping("/get_by_title")
-//    @Operation(
-//            description = "Get list of books by title",
-//            responses = {@ApiResponse(responseCode = "200", description = "List of books retrieved")}
-//    )
-//    public List<BookDtoResponse> getBooksByTitle(@RequestParam String title) {
-//        return bookService.findBookDtoByTitle(title);
-//    }
+    @GetMapping("/get_by_original_title")
+    @Operation(
+            description = "Get list of books by original title",
+            responses = {@ApiResponse(responseCode = "200", description = "List of books retrieved")}
+    )
+    public List<BookDto> getBooksByOriginalTitle(@RequestParam String originalTitle) {
+        return bookService.findBookDtoByOriginalTitle(originalTitle);
+    }
 
     @GetMapping("/filter")
     @Operation(
             description = "Filter books by search word, authors, categories, series, publishers, languages, covers, types, price, in stock, sort",
             responses = {@ApiResponse(responseCode = "200", description = "List of books retrieved successfully")}
     )
-    public ResponseEntity<List<BookDtoResponse>> filterBooks(
+    public ResponseEntity<List<BookDto>> filterBooks(
             // filter by search word
             @RequestParam(name = "search", required = false) String searchWord,
             // filters by id
@@ -113,11 +103,9 @@ public class BookController {
             @RequestParam(name = "page", defaultValue = "0") Integer page,
             @RequestParam(name = "size", defaultValue = "10") Integer size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDirection), sortBy));
-        List<BookDtoResponse> books = bookService.filterBooks(searchWord, authorIds, categoryIds, seriesIds, publisherIds, languages, covers, types, minPrice, maxPrice, inStock, pageable);
+        List<BookDto> books = bookService.filterBooks(searchWord, authorIds, categoryIds, seriesIds, publisherIds, languages, covers, types, minPrice, maxPrice, inStock, pageable);
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Total-Count", String.valueOf(books.size()));
         return ResponseEntity.ok().headers(headers).body(books);
     }
-
-
 }

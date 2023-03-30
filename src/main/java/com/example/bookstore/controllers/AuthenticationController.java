@@ -12,9 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@RestController
 @RequiredArgsConstructor
 @CrossOrigin
+@RestController
 @RequestMapping(value = "/api/v1/bookstore/auth")
 public class AuthenticationController {
     private final AuthenticationService service;
@@ -36,5 +36,4 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(service.authenticate(request));
     }
-
 }

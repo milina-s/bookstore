@@ -1,83 +1,63 @@
 package com.example.bookstore.services;
 
 import com.example.bookstore.constants.ErrorMessage;
-import com.example.bookstore.constants.LogMessage;
-import com.example.bookstore.dto.BookDtoRequest;
-import com.example.bookstore.dto.BookDtoResponse;
+import com.example.bookstore.dto.book.BookDto;
+import com.example.bookstore.dto.book.BookDtoRequest;
 import com.example.bookstore.model.book.Book;
 import com.example.bookstore.model.book.BookCover;
 import com.example.bookstore.model.book.BookLanguage;
 import com.example.bookstore.model.book.BookType;
 import com.example.bookstore.repositories.BookRepository;
+import com.example.bookstore.specifications.BookSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.example.bookstore.specifications.BookSpecification;
-
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.springframework.data.jpa.domain.Specification.where;
 
-@RequiredArgsConstructor
-
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class BookService {
 
     private final BookRepository bookRepository;
     private final AuthorService authorService;
     private final CategoryService categoryService;
-    private final ModelMapper mapper;
+    private final ModelMapper modelMapper;
     private final PublisherService publisherService;
     private final SeriesService seriesService;
 
-    public void save(BookDtoRequest bookDtoRequest) {
-        log.info(LogMessage.IN_SAVE, Book.class);
+    public void save(BookDtoRequest addBookDto) {
+        log.info("Save book with isbn: {}", addBookDto.getIsbn());
 
-        if (bookRepository.findByIsbn(bookDtoRequest.getIsbn()).isPresent())
-            throw new IllegalArgumentException(ErrorMessage.BOOK_ALREADY_EXISTS_BY_THIS_ISBN + bookDtoRequest.getIsbn());
-        if (bookRepository.existsByImage(bookDtoRequest.getImage()))
-            log.warn(LogMessage.BOOK_IMAGE_ALREADY_EXISTS, bookDtoRequest.getImage());
+        if (bookRepository.findByIsbn(addBookDto.getIsbn()).isPresent())
+            throw new IllegalArgumentException(ErrorMessage.BOOK_ALREADY_EXISTS_BY_THIS_ISBN + addBookDto.getIsbn());
+        if (bookRepository.existsByImage(addBookDto.getImage()))
+            log.warn("Book with this image already exists: {}", addBookDto.getImage());
 
-        bookRepository.save(setBook(mapper.map(bookDtoRequest, Book.class)));
+        bookRepository.save(setBook(modelMapper.map(addBookDto, Book.class)));
     }
 
-    public void update(BookDtoRequest bookDtoRequest) {
-        log.info(LogMessage.IN_UPDATE_BY_ID, Book.class, bookDtoRequest.getIsbn());
+    public void update(BookDtoRequest addBookDto) {
+        log.info("Update book with isbn: {}", addBookDto.getIsbn());
 
-        if (bookRepository.existsByIsbn(bookDtoRequest.getIsbn()))
-            throw new NoSuchElementException(ErrorMessage.BOOK_NOT_FOUND_BY_ISBN + bookDtoRequest.getIsbn());
+        if (bookRepository.existsByIsbn(addBookDto.getIsbn()))
+            throw new NoSuchElementException(ErrorMessage.BOOK_NOT_FOUND_BY_ISBN + addBookDto.getIsbn());
 
-        bookRepository.save(setBook(mapper.map(bookDtoRequest, Book.class)));
+        bookRepository.save(setBook(modelMapper.map(addBookDto, Book.class)));
     }
 
     public Book findBookByIsbn(String isbn) {
-        log.info(LogMessage.IN_FIND_BY_ID, Book.class, isbn);
+        log.info("Find book by isbn: {}", isbn);
 
         return bookRepository.findByIsbn(isbn).orElseThrow(
                 () -> new NoSuchElementException(ErrorMessage.BOOK_NOT_FOUND_BY_ISBN + isbn)
         );
-    }
-
-
-    public List<BookDtoResponse> findAllBookDto() {
-        log.info(LogMessage.IN_FIND_ALL, BookDtoResponse.class);
-
-        return bookRepository.findAll().stream()
-                .map(book -> mapper.map(book, BookDtoResponse.class))
-                .toList();
-    }
-
-    public List<BookDtoResponse> findAllBookResponseDto() {
-        log.info(LogMessage.IN_FIND_ALL, BookDtoResponse.class);
-
-        return bookRepository.findAll().stream()
-                .map(book -> mapper.map(book, BookDtoResponse.class))
-                .toList();
     }
 
     private Book setBook(Book book) {
@@ -92,55 +72,32 @@ public class BookService {
         return book;
     }
 
-    public BookDtoResponse findBookDtoByIsbn(String isbn) {
-        log.info(LogMessage.IN_FIND_BY_ID, BookDtoResponse.class, isbn);
+    public BookDto findBookDtoByIsbn(String isbn) {
+        log.info("Find book dto by isbn: {}", isbn);
 
-        return mapper.map(findBookByIsbn(isbn), BookDtoResponse.class);
+        return modelMapper.map(findBookByIsbn(isbn), BookDto.class);
     }
 
     public void deleteById(String isbn) {
-        log.info(LogMessage.IN_DELETE_BY_ID, Book.class, isbn);
+        log.info("Delete book by isbn: {}", isbn);
 
         if (!bookRepository.existsByIsbn(isbn))
             throw new NoSuchElementException(ErrorMessage.BOOK_NOT_FOUND_BY_ISBN + isbn);
         bookRepository.delete(findBookByIsbn(isbn));
     }
 
-    public List<BookDtoResponse> findBookDtoByAuthor(Long authorId) {
-        log.info(LogMessage.IN_FIND_BY_AUTHOR, authorId);
-
-        return bookRepository.findAllByAuthorId(authorId).stream()
-                .map(book -> mapper.map(book, BookDtoResponse.class))
-                .toList();
-    }
-
-    public List<BookDtoResponse> findBookDtoByCategory(Long categoryId) {
-        log.info(LogMessage.IN_FIND_BY_CATEGORY, categoryId);
-
-        return bookRepository.findAllByCategoryId(categoryId).stream()
-                .map(book -> mapper.map(book, BookDtoResponse.class))
-                .toList();
-    }
-
-    public List<BookDtoResponse> findBookDtoByOriginalTitle(String originalTitle) {
-        log.info(LogMessage.IN_FIND_BY_ORIGINAL_TITLE, originalTitle);
+    public List<BookDto> findBookDtoByOriginalTitle(String originalTitle) {
+        log.info("Find book by original title: {}", originalTitle);
 
         return bookRepository.findByTitleOriginalContaining(originalTitle).stream()
-                .map(book -> mapper.map(book, BookDtoResponse.class))
+                .map(book -> modelMapper.map(book, BookDto.class))
                 .toList();
     }
 
-    public List<BookDtoResponse> findBookDtoByTitle(String title) {
-        log.info(LogMessage.IN_FIND_BY_TITLE, title);
+    public List<BookDto> filterBooks(String searchWord, List<Long> authorIds, List<Long> categoryIds, List<Long> seriesIds, List<Long> publisherIds, List<BookLanguage> languages, List<BookCover> covers, List<BookType> types, Double minPrice, Double maxPrice, Boolean inStock, Pageable pageable) {
+        log.info("Filter books by \nsearchWord: {}, \nauthorIds: {}, \ncategoryIds: {}, \nseriesIds: {}, \npublisherIds: {}, \nlanguages: {}, \ncovers: {}, \ntypes: {}, \nminPrice: {}, \nmaxPrice: {}, \ninStock: {}, \npageable: {}",
+                searchWord, authorIds, categoryIds, seriesIds, publisherIds, languages, covers, types, minPrice, maxPrice, inStock, pageable);
 
-        return bookRepository.findByTitleContaining(title).stream()
-                .map(book -> mapper.map(book, BookDtoResponse.class))
-                .toList();
-    }
-
-
-    public List<BookDtoResponse> filterBooks(String searchWord, List<Long> authorIds, List<Long> categoryIds, List<Long> seriesIds, List<Long> publisherIds, List<BookLanguage> languages, List<BookCover> covers, List<BookType> types, Double minPrice, Double maxPrice, Boolean inStock, Pageable pageable) {
-        log.info(LogMessage.IN_FILTER_BOOKS);
         return bookRepository.findAll(
                         where(searchWord == null ? null :
                                 ((BookSpecification.titleContains(searchWord))
@@ -158,8 +115,7 @@ public class BookService {
                                 .and(maxPrice == null ? null : BookSpecification.hasPriceLessThan(maxPrice))
                                 .and(inStock ? BookSpecification.hasQuantityGreaterThanZero() : null)
                         , pageable).stream()
-                .map(book -> mapper.map(book, BookDtoResponse.class))
+                .map(book -> modelMapper.map(book, BookDto.class))
                 .toList();
-
     }
 }

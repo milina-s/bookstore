@@ -1,8 +1,7 @@
 package com.example.bookstore.services;
 
 import com.example.bookstore.constants.ErrorMessage;
-import com.example.bookstore.constants.LogMessage;
-import com.example.bookstore.dto.AuthorDto;
+import com.example.bookstore.dto.author.AuthorDto;
 import com.example.bookstore.model.Author;
 import com.example.bookstore.repositories.AuthorRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class AuthorService {
 
@@ -23,28 +22,30 @@ public class AuthorService {
     private final ModelMapper modelMapper;
 
     public Author findAuthorById(Long id) {
+        log.info("Find author by id {}", id);
+
         return authorRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(ErrorMessage.AUTHOR_NOT_FOUND_BY_ID + id));
     }
 
     public void save(AuthorDto author) {
-        log.info(LogMessage.IN_SAVE, Author.class);
+        log.info("Saving author with name {}", author.getNameEn());
 
-        if(authorRepository.findByNameEn(author.getNameEn()).isPresent())
-            log.warn(LogMessage.AUTHOR_NAME_ALREADY_EXISTS, author.getNameEn());
+        if (authorRepository.findByNameEn(author.getNameEn()).isPresent())
+            log.warn("Author with name {} already exists", author.getNameEn());
 
         Author authorEntity = modelMapper.map(author, Author.class);
         authorRepository.save(authorEntity);
     }
 
     public AuthorDto findAuthorDtoById(Long id) {
-        log.info(LogMessage.IN_FIND_BY_ID, Author.class, id);
+        log.info("Find author dto by id {}", id);
 
         return modelMapper.map(findAuthorById(id), AuthorDto.class);
     }
 
     public void deleteById(Long id) {
-        log.info(LogMessage.IN_DELETE_BY_ID, Author.class, id);
+        log.info("Delete author by id {}", id);
 
         if (!findAuthorById(id).getBooks().isEmpty())
             throw new IllegalArgumentException(ErrorMessage.NOT_SAVE_DELETION);
@@ -53,7 +54,7 @@ public class AuthorService {
     }
 
     public void update(AuthorDto authorDto) {
-        log.info(LogMessage.IN_UPDATE_BY_ID, Author.class, authorDto.getId());
+        log.info("Update author with id {}", authorDto.getId());
 
         if (!authorRepository.existsById(authorDto.getId()))
             throw new NoSuchElementException(ErrorMessage.AUTHOR_NOT_FOUND_BY_ID + authorDto.getId());
@@ -64,7 +65,7 @@ public class AuthorService {
     }
 
     public List<AuthorDto> findAllAuthorDto() {
-        log.info(LogMessage.IN_FIND_ALL, Author.class);
+        log.info("Find all authors");
 
         return modelMapper.map(authorRepository.findAll(), new TypeToken<List<AuthorDto>>() {
         }.getType());

@@ -1,8 +1,8 @@
 package com.example.bookstore.mappers;
 
-import com.example.bookstore.dto.OrderDto;
+import com.example.bookstore.dto.order.OrderBookDto;
+import com.example.bookstore.dto.order.OrderDto;
 import com.example.bookstore.model.order.Order;
-import com.example.bookstore.dto.OrderBookDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.AbstractConverter;
 import org.springframework.stereotype.Component;

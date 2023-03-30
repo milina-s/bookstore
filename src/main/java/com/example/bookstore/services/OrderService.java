@@ -1,10 +1,8 @@
 package com.example.bookstore.services;
 
 import com.example.bookstore.constants.ErrorMessage;
-import com.example.bookstore.constants.LogMessage;
-import com.example.bookstore.dto.CategoryDtoRequest;
-import com.example.bookstore.dto.OrderBookDto;
-import com.example.bookstore.dto.OrderDto;
+import com.example.bookstore.dto.order.OrderBookDto;
+import com.example.bookstore.dto.order.OrderDto;
 import com.example.bookstore.model.book.Book;
 import com.example.bookstore.model.order.Order;
 import com.example.bookstore.model.order.OrderBook;
@@ -15,7 +13,6 @@ import com.example.bookstore.specifications.OrderSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +22,8 @@ import java.util.stream.Collectors;
 
 import static org.springframework.data.jpa.domain.Specification.where;
 
-@RequiredArgsConstructor
 @Slf4j
-
+@RequiredArgsConstructor
 @Service
 public class OrderService {
 
@@ -35,19 +31,9 @@ public class OrderService {
     private final BookService bookService;
     private final ModelMapper modelMapper;
 
-    public void setStatusByManager(Long orderId, OrderStatus status, User manager) {
-        Order order = orderRepository.findById(orderId).orElseThrow();
-        order.setStatus(status);
-        orderRepository.save(order);
-    }
-
-    public void setStatusByCustomer(Long orderId, OrderStatus status, User customer) {
-        Order order = orderRepository.findById(orderId).orElseThrow();
-        order.setStatus(status);
-        orderRepository.save(order);
-    }
-
     public OrderDto createOrder(List<OrderBookDto> orderBookDtos, User user) {
+        log.info("Creating order for user: {}", user.getEmail());
+
         Order order = new Order();
         order.setStatus(OrderStatus.CREATED);
         order.setCreatedAt(LocalDateTime.now());
@@ -67,12 +53,16 @@ public class OrderService {
     }
 
     public Order findById(Long id) {
+        log.info("Find order by id: {}", id);
+
         return orderRepository.findById(id).orElseThrow(
                 () -> new RuntimeException(ErrorMessage.ORDER_NOT_FOUND_BY_ID + id)
         );
     }
 
     public void setOrderStatus(Long orderId, OrderStatus status, User user) {
+        log.info("Set order status: {} for order: {}", status, orderId);
+
         Order order = findById(orderId);
         if (user.getRole().name().equals("ROLE_CUSTOMER"))
             order.setCustomer(user);
@@ -85,13 +75,9 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public List<OrderDto> findAllOrderShortDtoResponse() {
-        return modelMapper.map(orderRepository.findAll(), new TypeToken<List<CategoryDtoRequest>>() {
-        }.getType());
-    }
-
     public List<OrderDto> filterOrders(String status, Long customerId, Long managerId, Long createdAfter, Pageable pageable) {
-        log.info(LogMessage.IN_FILTER_ORDERS);
+        log.info("Find filtered orders by status: {}, userId: {}, createdAfter: {}", status, (customerId != null ? customerId : managerId), createdAfter);
+
         return orderRepository.findAll(where(status == null ? null : OrderSpecification.hasStatus(status))
                         .and(customerId == null ? null : OrderSpecification.hasCustomer(customerId))
                         .and(managerId == null ? null : OrderSpecification.hasManager(managerId))
@@ -102,23 +88,14 @@ public class OrderService {
     }
 
     public boolean isOrderBelongsToUser(Long orderId, Long userId) {
-        log.info(LogMessage.IN_ORDER_BELONGS_TO_USER, orderId, userId);
+        log.info("Check if order: {} belongs to user: {}", orderId, userId);
+
         return orderRepository.existsByIdAndCustomerIdOrManagerId(orderId, userId, userId);
     }
 
     public OrderDto findOrderDto(Long orderId) {
+        log.info("Find order dto by id: {}", orderId);
+
         return modelMapper.map(findById(orderId), OrderDto.class);
-    }
-
-    public List<OrderDto> findOrderDtoByCustomer(Long customerId) {
-        log.info(LogMessage.IN_FIND_ORDERS_BY_CUSTOMER, customerId);
-        return modelMapper.map(orderRepository.findByCustomerId(customerId), new TypeToken<List<OrderDto>>() {
-        }.getType());
-    }
-
-    public List<OrderDto> findOrderDtoByManager(Long managerId) {
-        log.info(LogMessage.IN_FIND_ORDERS_BY_MANAGER, managerId);
-        return modelMapper.map(orderRepository.findByManagerId(managerId), new TypeToken<List<OrderDto>>() {
-        }.getType());
     }
 }
