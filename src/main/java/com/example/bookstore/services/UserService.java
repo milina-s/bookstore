@@ -3,6 +3,7 @@ package com.example.bookstore.services;
 import com.example.bookstore.constants.ErrorMessage;
 import com.example.bookstore.dto.book.BookDto;
 import com.example.bookstore.dto.book.BookIsbn;
+import com.example.bookstore.dto.user.UserDto;
 import com.example.bookstore.model.user.User;
 import com.example.bookstore.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -57,5 +58,11 @@ public class UserService {
 
         user.getFavouriteBooks().remove(bookService.findBookByIsbn(isbn.getIsbn()));
         userRepository.save(user);
+    }
+
+    public UserDto getProfileInfo(User user) {
+        log.info("Get profile info for user: {}", user.getEmail());
+
+        return modelMapper.map(user, UserDto.class);
     }
 }
