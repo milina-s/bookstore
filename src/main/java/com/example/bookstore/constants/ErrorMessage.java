@@ -3,7 +3,6 @@ package com.example.bookstore.constants;
 public final class ErrorMessage {
 
     public static final String CATEGORY_NOT_FOUND_BY_ID = "The category does not exist by this id.";
-    public static final String CATEGORY_NOT_FOUND_BY_NAME = "The category does not exist by this name.";
     public static final String CATEGORY_ALREADY_EXISTS_BY_THIS_NAME = "Category by this name already exists.";
     public static final String NOT_SAVE_DELETION = "This is can't be deleted.";
     public static final String BOOK_ALREADY_EXISTS_BY_THIS_ISBN = "Book by this ISBN already exists.";
@@ -20,4 +19,6 @@ public final class ErrorMessage {
     public static final String USER_NOT_ALLOWED_TO_CHANGE_ORDER_STATUS = "User not allowed to change order status.";
     public static final String USER_NOT_ALLOWED_TO_GET_ORDER = "User not allowed to get order.";
     public static final String USER_NOT_FOUND = "User not found by email or password.";
+    public static final String BOOK_ALREADY_IN_FAVORITES = "Book already in favorites.";
+    public static final String BOOK_NOT_IN_FAVORITES = "Book not in favorites.";
 }

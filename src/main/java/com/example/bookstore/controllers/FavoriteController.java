@@ -1,7 +1,7 @@
 package com.example.bookstore.controllers;
 
 import com.example.bookstore.dto.book.BookDto;
-import com.example.bookstore.services.FavoriteService;
+import com.example.bookstore.dto.book.BookIsbn;
 import com.example.bookstore.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,24 +19,33 @@ import java.util.List;
 @RequestMapping("/api/v1/bookstore/favorites")
 public class FavoriteController {
 
-    private final FavoriteService favoriteService;
     private final UserService userService;
 
-    @GetMapping("/get_all_for_current_user")
+    @GetMapping("/get_all")
     @Operation(
             description = "Get all favorites for current user",
             responses = {@ApiResponse(responseCode = "200", description = "Favorites retrieved successfully")}
     )
     public List<BookDto> getAllFavorites(Principal principal) {
-        return favoriteService.findAllFavorites(userService.findByEmail(principal.getName()));
+        return userService.findAllFavorites(userService.findByEmail(principal.getName()));
     }
 
-    @PutMapping("/add_or_remove")
+    @PutMapping("/add")
     @Operation(
-            description = "Add or remove favorite for current user",
-            responses = {@ApiResponse(responseCode = "200", description = "Favorite added or removed successfully")}
+            description = "Add book to favorites for current user",
+            responses = {@ApiResponse(responseCode = "200", description = "Book added to favorites successfully")}
     )
-    public void addFavorite(Principal principal, String isbn) {
-        favoriteService.addOrRemoveFavorite(userService.findByEmail(principal.getName()), isbn);
+    public void addFavorite(Principal principal, @RequestBody BookIsbn isbn) {
+        System.out.println(isbn.getIsbn());
+        userService.addFavorite(userService.findByEmail(principal.getName()), isbn);
+    }
+
+    @PutMapping("/delete")
+    @Operation(
+            description = "Delete book from favorites for current user",
+            responses = {@ApiResponse(responseCode = "200", description = "Book deleted from favorites successfully")}
+    )
+    public void removeFavorite(Principal principal, @RequestBody BookIsbn isbn) {
+        userService.deleteFavorite(userService.findByEmail(principal.getName()), isbn);
     }
 }

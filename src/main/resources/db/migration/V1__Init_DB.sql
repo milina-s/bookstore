@@ -108,7 +108,7 @@ create table orders
     foreign key (manager_id) references users (id)
 );
 
-create table order_book
+create table order_books
 (
     order_id            int            not null,
     book_isbn           varchar(255)   not null,
@@ -120,7 +120,7 @@ create table order_book
     foreign key (book_isbn) references books (isbn)
 );
 
-create table favorites
+create table favorite_books
 (
     user_id   int          not null,
     book_isbn varchar(255) not null,

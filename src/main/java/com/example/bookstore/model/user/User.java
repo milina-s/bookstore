@@ -1,5 +1,6 @@
 package com.example.bookstore.model.user;
 
+import com.example.bookstore.model.book.Book;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -59,6 +61,13 @@ public class User implements UserDetails {
 
     @Column(name = "address")
     private String address;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(
+            name = "favorite_books",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "book_isbn", referencedColumnName = "isbn")})
+    private Set<Book> favouriteBooks = Collections.emptySet();
 
     public User(String email, String password, UserRole role, String firstname, String lastname, String phone, String address) {
         this.email = email;

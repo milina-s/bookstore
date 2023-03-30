@@ -39,7 +39,7 @@ DECLARE
 BEGIN
     SELECT COALESCE(SUM(quantity), 0)
     INTO purchases
-    FROM order_book
+    FROM order_books
     WHERE book_isbn = NEW.book_isbn;
 
     update books set popularity = purchases where isbn = NEW.book_isbn;
@@ -52,6 +52,6 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER reviews_after_insert
     AFTER INSERT
-    ON order_book
+    ON order_books
     FOR EACH ROW
 EXECUTE FUNCTION update_book_popularity();

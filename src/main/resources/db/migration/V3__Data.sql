@@ -271,7 +271,7 @@ values (1, '2019-01-01 00:00:00'),
        (3, '2019-01-01 00:00:00'),
        (2, '2019-01-01 00:00:00');
 
-insert into order_book (order_id, book_isbn, quantity, price)
+insert into order_books (order_id, book_isbn, quantity, price)
 values (1, '9786171232020', 2, 250),
        (1, '9786171294998', 1, 250),
        (1, '9786171266919', 1, 190),
@@ -281,7 +281,7 @@ values (1, '9786171232020', 2, 250),
        (3, '9786171289000', 1, 100),
        (3, '9786171276482', 2, 190);
 
-insert into favorites (user_id, book_isbn)
+insert into favorite_books (user_id, book_isbn)
 values (1, '9786171232020'),
        (1, '9786171261266'),
        (1, '9780099532811'),

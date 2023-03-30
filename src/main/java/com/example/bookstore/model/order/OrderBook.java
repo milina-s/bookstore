@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "order_book")
+@Table(name = "order_books")
 public class OrderBook {
 
     @EmbeddedId
